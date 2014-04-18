@@ -5,12 +5,12 @@
 #' @param nsim number of replicate simulations for estimating the CDF
 #' @param N0 initial population size
 #' @param Nx quasi-extinction threshold
-#' @param d the difference between \code(log(N0)) and \code(log(Nx)). Either specify d or specify Nx
+#' @param d the difference between \code{log(N0)} and \code{log(Nx)}. Either specify d or specify Nx
 #'   and N0
 #'   
-#' @return a data frame with columns \code{Time} and \code{CDF}
+#' @return A data frame with columns \code{Time} and \code{CDF}
 extRiskSEG <- function(mu, sigma2, time_horizon, nsims=1000, N0=NULL, Nx=NULL, d=log(Nx/N0) ) {
-  if (is.null(d)) {
+  if (length(d)==0) {
     stop("Either specify N0 and Nx or specify d")
   }
   if (is.null(N0)) {
