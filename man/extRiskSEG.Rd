@@ -1,0 +1,31 @@
+\name{extRiskSEG}
+\alias{extRiskSEG}
+\title{Calculate a CDF of quasi-extinction risk for the SEG model}
+\usage{
+extRiskSEG(mu, sigma2, time_horizon, nsims = 1000, N0 = NULL, Nx = NULL,
+  d = log(Nx/N0))
+}
+\arguments{
+  \item{mu}{the mean log growth rate}
+
+  \item{sigma2}{the variance of the log growth rates}
+
+  \item{time_horizon}{number of years to simulate}
+
+  \item{nsim}{number of replicate simulations for
+  estimating the CDF}
+
+  \item{N0}{initial population size}
+
+  \item{Nx}{quasi-extinction threshold}
+
+  \item{d}{the difference between \code{log(N0)} and
+  \code{log(Nx)}. Either specify d or specify Nx and N0}
+}
+\value{
+A data frame with columns \code{Time} and \code{CDF}
+}
+\description{
+Calculate a CDF of quasi-extinction risk for the SEG model
+}
+

@@ -1,0 +1,29 @@
+\name{rbeta2}
+\alias{rbeta2}
+\title{Generate random number(s) from a beta distribution with specified mean and standard deviation}
+\usage{
+rbeta2(n, mean, sdev)
+}
+\arguments{
+  \item{n}{number of random deviates desired}
+
+  \item{mean}{mean of the distribution (must be in (0,1))}
+
+  \item{sdev}{standard deviation of the distribution.
+  Limits depend on the value of \code{mean}}
+}
+\value{
+a vector of length \code{n} with the random numbers
+}
+\description{
+\code{rbeta2} converts the mean and stdev to appropriate
+shape parameters and calls \code{rbeta}. It has similar
+functionality to \code{betaval} but is faster.
+}
+\details{
+All arguments must be scalars.
+}
+\seealso{
+\code{\link{rbeta}} and \code{\link{betaval}}
+}
+
