@@ -9,7 +9,7 @@
 #'   and N0
 #'   
 #' @return A data frame with columns \code{Time} and \code{CDF}
-extRiskSEG <- function(mu, sigma2, time_horizon, nsims=1000, N0=NULL, Nx=NULL, d=log(Nx/N0) ) {
+extRiskSEG <- function(mu, sigma2, time_horizon, nsims=1000, N0=NULL, Nx=NULL, d=log(N0/Nx) ) {
   if (length(d)==0) {
     stop("Either specify N0 and Nx or specify d")
   }
