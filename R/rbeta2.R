@@ -9,7 +9,7 @@
 #' 
 #' @details All arguments must be scalars.
 #' @return a vector of length \code{n} with the random numbers
-#' @seealso \code{\link{rbeta}} and \code{\link{betaval}}
+#' @seealso \code{\link{rbeta}} and \code{\link[popbio]{betaval}}
 rbeta2 <- function(n, mean, sdev) {
     stopifnot(is.numeric(n), is.numeric(mean), is.numeric(sdev), 
               length(n) == 1, length(mean) ==1, length(sdev) == 1)

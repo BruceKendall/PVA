@@ -3,12 +3,12 @@
 \alias{PVA}
 \docType{package}
 \title{
-What the package does (short line)
-~~ package title ~~
+Population Viability Analysis
 }
 \description{
-More about what it does (maybe more than one line)
-~~ A concise (1-5 lines) description of the package ~~
+Perform population viability analysis (PVA) in R without needing advanced coding 
+  techniques. The goal is for the tools to be accessible to any user who is comfortable with 
+  standard data analysis in R. A GUI based on shiny will be included for many standard analyses.
 }
 \details{
 \tabular{ll}{
@@ -21,19 +21,14 @@ License: \tab What license is it under?\cr
 ~~ An overview of how to use the package, including the most important functions ~~
 }
 \author{
-Who wrote it
-
-Maintainer: Who to complain to <yourfault@somewhere.net>
-~~ The author and/or maintainer of the package ~~
+Bruce Kendall
 }
 \references{
-~~ Literature or other references for background information ~~
+
 }
 \keyword{ package }
 \seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
+
 }
 \examples{
-~~ simple examples of the most important functions ~~
 }

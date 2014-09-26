@@ -2,7 +2,7 @@
 #' @param mu the mean log growth rate
 #' @param sigma2 the variance of the log growth rates
 #' @param time_horizon number of years to simulate
-#' @param nsim number of replicate simulations for estimating the CDF
+#' @param nsims number of replicate simulations for estimating the CDF
 #' @param N0 initial population size
 #' @param Nx quasi-extinction threshold
 #' @param d the difference between \code{log(N0)} and \code{log(Nx)}. Either specify d or specify Nx
