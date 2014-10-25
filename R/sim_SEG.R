@@ -40,12 +40,10 @@ sim_SEG <- function() {
         mainPanel(
           fluidRow(
             column(8,
-                   h3("Time series"),
                    plotOutput("tsPlot")
                    
             ),
             column(4,
-                   h3("Final distribution"),
                    plotOutput("finalHist"))
           ),
           fluidRow(
@@ -72,7 +70,8 @@ sim_SEG <- function() {
       
       
       output$tsPlot <- renderPlot({
-        matplot(Years(), Nt1(), type='l', xlab="Time (t)", ylab=expression(N[t])) 
+        matplot(Years(), Nt1(), type='l', xlab="Time (t)", ylab=expression(N[t]),
+                main="Time series") 
       })
       output$tsPlotlog <- renderPlot({
         matplot(Years(), Nt1(), type="l", log="y", xlab="Time (t)", 
@@ -80,7 +79,7 @@ sim_SEG <- function() {
       })
       output$finalHist <- renderPlot({
         hist(as.matrix(Nt1()[(input$time_horizon+1),]),
-             main="", xlab=expression(N[t]))
+             main="Final Distribution", xlab=expression(N[t]))
       })
       output$finalHistlog <- renderPlot({
         hist(as.matrix(log(Nt1()[(input$time_horizon+1),])),
