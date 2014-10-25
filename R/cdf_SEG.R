@@ -39,33 +39,45 @@ cdf_SEG <- function() {
                        min=2)
         ),
         
-        # Show a plot of the generated distribution
+        # Show the plot
         mainPanel(
           plotOutput("cdfPlot")
-#          textOutput("testText")
         )
       )
     ),
     server = function(input,output) {
+      # Note that the following code could have been replaced with a simple
+      # call to extRiskSEG(), but for some parameters this longer form will
+      # update faster when the parameter is changed
       Years <- reactive({ 0:input$time_horizon })
       d <- reactive({ log(input$N0/input$Nx) })
+      
+      # Random numbers are only updated if number of simulations or time 
+      # horizon is changed
       epsilons <- reactive({ 
         nn <- input$num_sims * input$time_horizon
         matrix(data = rnorm(n = nn), nrow = input$time_horizon)
       })
+      
+      # Vector of expected changes from zero
       mus <- reactive({ 
-#        seq(from=input$mu, by=input$mu, length=input$time_horizon) 
         input$mu * (1:input$time_horizon)
       })
+  
+      # This both converts to actual log values (relative to zero)
+      # and takes the cumulative minimum. It's the only place that
+      # depends on sigma2
       mins <- reactive({ 
         apply(epsilons()*sqrt(input$sigma2) + mus(), 2, cummin)
       })
+      
+      # And, finally, calculate the CDF
       CDF <- reactive({
         exts <- mins() < -d()
         c(0, apply(exts, 1, mean))
       })
       
-#      output$testText <- renderText({d()})
+      # Plot the CDF
       output$cdfPlot <- renderPlot({
         plot(Years(), CDF(), type='l', xlab="Years", 
              ylab="Cumulative extinction risk") 
