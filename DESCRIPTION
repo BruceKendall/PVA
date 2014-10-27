@@ -1,7 +1,7 @@
 Package: PVA
 Type: Package
 Title: Population viability analysis in R
-Version: 0.03
+Version: 0.04
 Date: 2014-04-04
 Author: Bruce Kendall
 Maintainer: Bruce Kendall <kendall@bren.ucsb.edu>
