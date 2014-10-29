@@ -68,7 +68,7 @@ cdfMap_SEG <- function() {
       # horizon is changed
       epsilons <- reactive({ 
         nn <- input$num_sims * input$time_horizon
-        matrix(data = rnorm(n = nn), nrow = input$time_horizon)
+        apply(matrix(data = rnorm(n = nn), nrow = input$time_horizon), 2, cumsum)  
       })
       
       CDFs <- reactive({
