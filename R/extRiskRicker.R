@@ -10,6 +10,8 @@
 #'   
 #' @return A data frame with columns \code{Time} and \code{CDF}
 extRiskRicker <- function(r, K, sigma2, time_horizon, N0, nsims=1000, Nx=NULL, d=log(N0/Nx) ) {
+
+  #' Some error checking:
   if (length(d)==0) {
     stop("Either specify Nx or specify d")
   }
