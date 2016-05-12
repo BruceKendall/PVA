@@ -1,4 +1,4 @@
-function (x, Nc, Nx, year.max = 100, nsim = 1000, ES = c("MatrixDraw", 
+dmm.PVA <- function (x, Nc, Nx, year.max = 100, nsim = 1000, ES = c("MatrixDraw", 
     "ParDraw", "none"), DS = FALSE, Varsamp = c("none", "White"), 
     fecmod = c("logN", "sBeta"), fecmax = 1, ...) 
 {
