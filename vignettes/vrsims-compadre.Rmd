@@ -1,0 +1,128 @@
+---
+title: "Vital rate stochastic simulations with Com(p)adre matrices"
+author: "Bruce Kendall"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vital rate stochastic simulations with Com(p)adre matrices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Stochastic matrix simulation using "element selection" actually requires breaking the matrix elements into their underlying vital rates, so as to preserve structural correlations (e.g., all elements associated with survival from stage $j$ should contain the same survival) and constraints (i.e., the growth parameters from stage $j$, conditional on survival, should sum to one; also seen as the column sums of the U matrix should sum to stage-specific survival, and thus be no more than one).
+
+If we have vital rates, and a function to turn those vital rates back into a matrix, then we use the `vitalsim()` function in the `popbio` package. This function is problematic as it is definitely slow and might or might not produce a time series of vital rates with exactly the right variances and covariances (I haven't tested this, but the fact that the original VC matrix is based on untransformed raw vital rates and the resulting correlations are used to generate multivariate normals that are back-transformed makes me suspicious). In addition, the distributions that it uses to generate stochastic parameter values will never return exactly zero. Nevertheless, it is a documented function based on a widely used publication, and writing a "better" substitute (that was reliable) would take more time than I have at the moment.
+
+So I have written a set of helper functions to allow us to use `vitalsim()` with Compadre and Comadre matrices. Before demonstrating their use, some caveats on the development to date.
+
+## Caveats
+### No decomposition of the F matrix
+Each element of the F matrix is a product of two vital rates: a birth rate and a survival rate (the latter is either offspring survival or parent survival, depending on how the model is structured). The Compadre and Comadre databases do not have information that would allow us to do this decomposition, so we have to use their variances and covariances as is. I have no idea what theoretical distribution we should expect them to follow, in general.
+
+### No support for clonal reproduction
+At the moment, the C matrices are ignored. This is mostly laziness on my part, but I also have no idea of what the distribution of C values among years should look like. The capabilities of `vitalsim()` are beta distribution (for parameters constrained to be between zero and one) and "stretched" beta and lognormal for parameters that are merely non-negative. 
+
+**If any of the populations that you want to use have clonal reproduction** please let me know, and I will add clonal terms in analagous ways to how I have treated the F matrix. It will be up to you to decide what distribution is best.
+
+### Limited testing
+I have only tested the code on a few matrices. You can help by testing the code on your matrices in a couple of ways:
+
+- Ensure that converting the matrix into vital rates and back into a matrix returns the original matrix.
+- Check that the output from running `vitalsim()` is not wildly different from that of doing matrix selection.
+
+Sample code for both of these are below.
+
+## Using the code
+
+If you have not already done so, install the PVA package using `devtools::install_git("git://github.com/BruceKendall/PVA.git")`.
+
+First we load some Compadre data (you'll need to modify this to point to your datafile):
+```{r}
+load("~/Documents/Home/IDEM186/data/COMPADRE_v.3.2.1.RData")
+```
+Pick a population to work with. The `subsetDB2()` command is a slight modification to the code on the Compadre githup site to allow the subsetting conditions to be included as the first argument:
+```{r}
+library(PVA)
+cadre <- subsetDB2(SpeciesAccepted == "Mammillaria huitzilopochtli" & 
+                     MatrixPopulation =="PCS" & MatrixDimension == 6 &
+                     MatrixTreatment=="Unmanipulated" & MatrixComposite=="Individual" &
+                     StudyDuration==5, compadre)
+```
+It turns out this population has a high mean $\lambda$ so is not very interesting as an extinction risk case!
+
+Now extract the vital rates from the F and U matrices:
+```{r}
+cadreVRs <- extractVRs(cadre)
+str(cadreVRs)
+```
+`vrmat` is the component most interesting to the user:
+```{r}
+cadreVRs$vrmat
+```
+The "F" elements are taken straight from the F matrices in the database; the S elements are survivals of each stage, and the G elements are growth terms re-expressed as independent binomials (see p. 273 in Morris and Doak).
+
+The `matstruct` component is used (mostly) for reconstituting the matrices from the vital rates. I threw the `Amean` bit in there because I wanted it to get a reasonable starting vector (see below).
+
+Now we need to get the means, variances, cross-correlations, and autocorrelations:
+```{r}
+cadreStats <- vrstats(cadreVRs$vrmat)
+str(cadreStats)
+```
+Each of these four elements is an input into `vitalsim()`.
+
+Finally, we get to run the simulations. `matstruct` needs to be in the global environment to get down to the matrix reconstruction function (`vrtomat`) because `vitalsim` doesn't provide for passing along extra information (it assumes you will hand-craft a matrix for each population). For an initial population vector, I assumed 1000 individuals following the stable distribution of the mean matrix.
+
+```{r}
+library(popbio)
+n0 <- stable.stage(cadreVRs$matstruct$Amean)*1000
+matstruct <- cadreVRs$matstruct
+vrtypes <- with(matstruct, 
+                c(rep(3, nrow(Findices)), rep(1, nrow(Sindices) + nrow(Gindices)))
+                )
+```
+```{r vitalsim, cache=TRUE, fig.width=7}
+cadreExt <- with(cadreStats, 
+                 vitalsim(vrmeans, vrvars, corrin, corrout, vrtomat, n0, 20, runs = 50,
+                          vrtypes = vrtypes)
+                 )
+cadreExt
+```
+As I said, the extinction risk curve isn't very interesting!
+
+You will want to use the first 5 arguments to `vitalsim` as I have done above; see the help for that function for other options and parameters.
+
+## Testing
+As I mentioned above, my code is at high risk for having errors, so for your sake and mine you should do some testing.
+
+### Proper matrix reconstruction
+Ensure that the round trip from matrix to vital rates and back gives the same matrix! The following should print out matrices of zeros (the rounding is because we expect some devations on the order of $10^{-16}$)
+```{r}
+for (tt in 1:nrow(cadre$metadata)) {
+  print(round(vrtomat(cadreVRs$vrmat[ , tt]) - cadre$mat[[tt]]$matA), 6)
+}
+```
+
+### Compare with matrix selection
+We would expect the distribution of lambdas to not be wildly different from that acheived by matrix selection methods. We can get the latter using `stoch.growth.rate()`. Note that both `vitalsim` and `stoch.growth.rate` estimate lambda from the difference between intial and final abundance, and the latter starts from teh stable stage distribution of the mean matrix.
+```{r}
+Amats <- llply(cadre$mat, function(x) x$matA)
+cadreMS <- stoch.projection(Amats, n0, tmax = 50, nreps = 50)
+cadreMSlogLambdas <- (log(rowSums(cadreMS)) - log(sum(n0)))/50
+plot(density(cadreExt$logLambdas))
+abline(v = mean(cadreExt$logLambdas), lty=2)
+lines(density(cadreMSlogLambdas), col="red")
+abline(v = mean(cadreMSlogLambdas), lty=2, col="red")
+```
+
+Thus, at least with this small sample size and short time horizon, the element selection model is generating a lower mean, and greater variability, in $\lambda$ than is matrix selection. I don't actually know if these differences are larger than we would expect; as far as I know, there have not been any explicit comparisons betwen the two approaches (I couldn't find any in Morris and Doak or Caswell, at least). I don't think this figure indicates coding problems; but let me know if you get cases with essentially no overlap in the distributions.
+
+### Sensible F distribution
+This isn't really a test of the code, but more a sanity test for the overall model. Is the lognormal a good approximation for between-year variation in F?
+```{r}
+Fvrs <- cadreVRs$vrmat[1:nrow(cadreVRs$matstruct$Findices), ]
+for (i in 1:nrow(Fvrs)) {
+  car::qqPlot(Fvrs[i, ], "lnorm", main=rownames(Fvrs)[i])
+}
+```
+
+It's really hard to tell much with five points! But maybe there's something a bit odd going on with F.1.5.
