@@ -100,11 +100,11 @@ sim_Ricker <- function() {
                 ylab=expression(N[t]~~(log~~scale)))
       })
       output$finalHist <- renderPlot({
-        hist(as.matrix(Nt1()[(input$time_horizon+1),]),
+        hist(as.matrix(Nt1())[(input$time_horizon+1),],
              main="Final Distribution", xlab=expression(N[t]))
       })
       output$finalHistlog <- renderPlot({
-        hist(as.matrix(log(Nt1()[(input$time_horizon+1),])),
+        hist(as.matrix(log(Nt1()))[(input$time_horizon+1),],
              main="", xlab=expression(log(N[t])))        
       })
       
