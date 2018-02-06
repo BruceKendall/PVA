@@ -17,5 +17,5 @@ Suggests:
     knitr,
     rmarkdown
 License: CC BY-SA 3.0 US
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 VignetteBuilder: knitr

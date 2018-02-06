@@ -15,4 +15,3 @@ A list with elements vrmeans, vrvars, corrin, and corrout, which are used by vit
 \description{
 Calculate vital rate stats for use in vitalsim
 }
-

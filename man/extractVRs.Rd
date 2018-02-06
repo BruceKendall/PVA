@@ -19,4 +19,3 @@ A list with two elements
 \description{
 Extract vital rates from time series of Comadre/Compadre matrices
 }
-

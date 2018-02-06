@@ -37,4 +37,3 @@ where
 simulateRicker(2, 100, 0.01, 20, 10)
 simulateRicker(2, 100, 0.01, 20, 10, 5, keep_N0=TRUE)
 }
-

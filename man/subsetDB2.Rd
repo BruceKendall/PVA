@@ -20,4 +20,3 @@ Extract subset from a compadre/comadre object
 \details{
 Based on subsetDB() from https://github.com/jonesor/compadreDB; the change is to allow the subsetting to be specified as a logical expression
 }
-
