@@ -1,6 +1,7 @@
-#' Stochastic Exponential Growth model demo
+#' Stochastic Ricker model demo
 #' 
-#' A Shiny demo of the SEG model. The user can set the mean log growth rate,
+#' A Shiny demo of the stochastic Ricker model. The user can set the low-density growth rate,
+#' the equilibrium abundance, 
 #' the variance of the log growth rate, the initial population size, and the length of simulation.
 #' The number of replicate simulations can also be changed.
 #'
@@ -17,22 +18,25 @@
 #' launching a shiny app. You will have to close the shiny window or hit the
 #' Stop button in the console to get the console prompt back.
 #' 
-sim_SEG <- function() {
+demo_sim_Ricker <- function() {
   require(shiny)
   require(PVA)
   shinyApp(
     ui = fluidPage(
       # Application title
-      titlePanel("Stochastic exponential growth simulation"),
+      titlePanel("Stochastic Ricker model simulation"),
       
       # Sidebar with a slider input for the number of bins
       sidebarLayout(
         sidebarPanel(
-          numericInput("mu",
-                       "Mean log growth rate (mu)",
-                       value=0.01,
-                       min=-1,
-                       max=1),
+          numericInput("r",
+                       "Low-density growth rate (r)",
+                       value=1,
+                       min=0),
+          numericInput("K",
+                       "Equilibrium abundance (K)",
+                       value=100,
+                       min=0),
           numericInput("sigma2",
                        "Variance of log growth rate (sigma2)",
                        value=0.01,
@@ -80,10 +84,9 @@ sim_SEG <- function() {
       Years <- reactive({ 0:input$time_horizon })
       Nt1 <- reactive({
         input$runAgain
-        replicate(input$num_sims, 
-                  c(input$N0, 
-                    simulateSEG(input$mu, input$sigma2, input$N0, input$time_horizon))
-        )
+        simulateRicker(input$r, input$K, input$sigma2, input$N0, 
+                    input$time_horizon, input$num_sims, TRUE)
+        
       })
       
       
@@ -97,11 +100,11 @@ sim_SEG <- function() {
                 ylab=expression(N[t]~~(log~~scale)))
       })
       output$finalHist <- renderPlot({
-        hist(as.matrix(Nt1()[(input$time_horizon+1),]),
+        hist(as.matrix(Nt1())[(input$time_horizon+1),],
              main="Final Distribution", xlab=expression(N[t]))
       })
       output$finalHistlog <- renderPlot({
-        hist(as.matrix(log(Nt1()[(input$time_horizon+1),])),
+        hist(as.matrix(log(Nt1()))[(input$time_horizon+1),],
              main="", xlab=expression(log(N[t])))        
       })
       

@@ -1,4 +1,4 @@
-cdf_Ricker <- function() {
+demo_cdf_Ricker <- function() {
   require(shiny)
   require(PVA)
   shinyApp(

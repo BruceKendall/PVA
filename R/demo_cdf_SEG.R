@@ -1,4 +1,4 @@
-cdf_SEG <- function() {
+demo_cdf_SEG <- function() {
   require(shiny)
   require(PVA)
   shinyApp(
