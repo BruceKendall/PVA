@@ -7,22 +7,22 @@
 demo_sim_Ricker()
 }
 \value{
-Nothing is returned; the commmand is run for its side effect of 
+Nothing is returned; the commmand is run for its side effect of
 launching a shiny app. You will have to close the shiny window or hit the
 Stop button in the console to get the console prompt back.
 }
 \description{
 A Shiny demo of the stochastic Ricker model. The user can set the low-density growth rate,
-the equilibrium abundance, 
+the equilibrium abundance,
 the variance of the log growth rate, the initial population size, and the length of simulation.
 The number of replicate simulations can also be changed.
 }
 \details{
-Four graphs are produced. The left plots are time series of abundance, plotted on a linear 
-scale (top) and a logarithmic scale (bottom). The right plots are histograms of the final 
+Four graphs are produced. The left plots are time series of abundance, plotted on a linear
+scale (top) and a logarithmic scale (bottom). The right plots are histograms of the final
 abundance and final log abundance across the replicate simulations.
 
 The simulations update immediately when you change any parameter value. To
-see a new set of stochastic simulations without changing any parameters, hit 
+see a new set of stochastic simulations without changing any parameters, hit
 the "Run again" button.
 }

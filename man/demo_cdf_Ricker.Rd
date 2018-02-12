@@ -7,7 +7,7 @@
 demo_cdf_Ricker()
 }
 \value{
-Nothing is returned; the commmand is run for its side effect of 
+Nothing is returned; the commmand is run for its side effect of
 launching a shiny app. You will have to close the shiny window or hit the
 Stop button in the console to get the console prompt back.
 }
@@ -19,7 +19,7 @@ and the length of simulation.
 The number of replicate simulations can also be changed.
 }
 \details{
-A single graph is produced, showing the cumulative disribution function (CDF) 
+A single graph is produced, showing the cumulative disribution function (CDF)
 of (quasi-) extinction risk. This is calculated using \code{\link{extRiskRicker}}.
 
 The simulations update immediately when you change any parameter value.

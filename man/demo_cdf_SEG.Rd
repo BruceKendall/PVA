@@ -7,7 +7,7 @@
 demo_cdf_SEG()
 }
 \value{
-Nothing is returned; the commmand is run for its side effect of 
+Nothing is returned; the commmand is run for its side effect of
 launching a shiny app. You will have to close the shiny window or hit the
 Stop button in the console to get the console prompt back.
 }
@@ -20,6 +20,6 @@ The number of replicate simulations can also be changed.
 \details{
 A single graph is produced, showing the cumulative disribution function (CDF) of (quasi-) extinction risk.
 
-The simulations update immediately when you change any parameter value. 
+The simulations update immediately when you change any parameter value.
 The updates are fast because new random numbers are calculated only if the simulation length or number of replicates is changed.
 }

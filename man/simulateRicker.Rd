@@ -29,7 +29,7 @@ Simulate one or more time series from the stochastic Ricker model
 }
 \details{
 This function simulates the Ricker discrete time model with environmental stochasticity, defined as follows
-\deqn{N(t+1) = N(t) exp[r (1 - N(t)/K) + \epsilon(t)]}, 
+\deqn{N(t+1) = N(t) exp[r (1 - N(t)/K) + \epsilon(t)]},
 where
 \deqn{\epsilon(t) ~ Normal(0, \sigma)}
 }
