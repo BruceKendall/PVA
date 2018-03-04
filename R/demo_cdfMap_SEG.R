@@ -1,4 +1,4 @@
-cdfMap_SEG <- function() {
+demo_cdfMap_SEG <- function() {
   require(shiny)
   require(PVA)
   shinyApp(

@@ -30,7 +30,7 @@ simulateRicker <- function (r, K, sigma2, N0, time_horizon, nsims=1, keep_N0=FAL
   epsilont <- matrix(rnorm(time_horizon*nsims, 0, sigma), time_horizon, nsims)
   
   for (Time in 1:time_horizon) {
-    Xt[Time+1,] <- Xt[Time,] + r * (1 - Nt[Time,]/K + epsilont[Time,])
+    Xt[Time+1,] <- Xt[Time,] + r * (1 - Nt[Time,]/K) + epsilont[Time,]
     Nt[Time+1,] <- exp(Xt[Time+1,])
   }
   

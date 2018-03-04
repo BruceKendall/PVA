@@ -1,4 +1,22 @@
-cdf_Ricker <- function() {
+#' Extinction risk demo: Ricker model
+#' 
+#' A Shiny demo of extinction risk under the SEG model. The user can set the low-density growth rate,
+#' the equilibrium abundance,
+#' the variance of the log growth rate, the initial population size, the quasi-extinction population size,
+#' and the length of simulation.
+#' The number of replicate simulations can also be changed.
+#'
+#' A single graph is produced, showing the cumulative disribution function (CDF) 
+#' of (quasi-) extinction risk. This is calculated using \code{\link{extRiskRicker}}.
+#' 
+#' The simulations update immediately when you change any parameter value. 
+#' 
+#' 
+#' @return Nothing is returned; the commmand is run for its side effect of 
+#' launching a shiny app. You will have to close the shiny window or hit the
+#' Stop button in the console to get the console prompt back.
+#' 
+demo_cdf_Ricker <- function() {
   require(shiny)
   require(PVA)
   shinyApp(
@@ -56,7 +74,7 @@ cdf_Ricker <- function() {
       # Plot the CDF
       output$cdfPlot <- renderPlot({
         plot(CDF~Time, data=CDF(), type='l', xlab="Years", 
-             ylab="Cumulative extinction risk") 
+             ylab="Cumulative extinction risk", ylim = c(0, 1)) 
      })
       
       

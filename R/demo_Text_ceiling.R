@@ -1,4 +1,4 @@
-ceiling_demo <- function() {
+demo_Text_ceiling <- function() {
   require(shiny)
   require(PVA)
   shinyApp(

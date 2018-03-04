@@ -21,4 +21,3 @@ vector of length \code{time_horizon} with the simulated abundances
 \description{
 Simulate a time series from the stochastic exponential growth model
 }
-

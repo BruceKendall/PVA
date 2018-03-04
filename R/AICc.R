@@ -1,5 +1,7 @@
 AICc <- function(x)
 {
+# Really need to extend this to other common model types!
+
     if (class(x) == "lm") {
         p <- length(coef(x)) + 1
         Q <- length(fitted(x))

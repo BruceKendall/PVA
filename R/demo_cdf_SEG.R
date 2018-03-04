@@ -1,4 +1,21 @@
-cdf_SEG <- function() {
+#' Extinction risk demo: Stochastic Exponential Growth model
+#' 
+#' A Shiny demo of extinction risk under the SEG model. The user can set the mean log growth rate,
+#' the variance of the log growth rate, the initial population size, the quasi-extinction population size,
+#' and the length of simulation.
+#' The number of replicate simulations can also be changed.
+#'
+#' A single graph is produced, showing the cumulative disribution function (CDF) of (quasi-) extinction risk.
+#' 
+#' The simulations update immediately when you change any parameter value. 
+#' The updates are fast because new random numbers are calculated only if the simulation length or number of replicates is changed.
+#' 
+#' 
+#' @return Nothing is returned; the commmand is run for its side effect of 
+#' launching a shiny app. You will have to close the shiny window or hit the
+#' Stop button in the console to get the console prompt back.
+#' 
+demo_cdf_SEG <- function() {
   require(shiny)
   require(PVA)
   shinyApp(

@@ -31,4 +31,3 @@ Some error checking:
 \description{
 Calculate a CDF of quasi-extinction risk for the Ricker model
 }
-

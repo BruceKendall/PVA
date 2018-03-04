@@ -26,4 +26,3 @@ All arguments must be scalars.
 \seealso{
 \code{\link{rbeta}} and \code{\link[popbio]{betaval}}
 }
-

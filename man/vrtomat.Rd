@@ -18,4 +18,3 @@ Reconstitute matrix from vital rates
 \details{
 An object called \code{matstruct} (part of the output from \code{\link{extractVRs}}) needs to be in the global environment. This is not passed in because \code{vitalsim} does not allow for the passing of extra parameters through to the matrix construction function.
 }
-

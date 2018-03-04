@@ -29,4 +29,3 @@ A data frame with columns \code{Time} and \code{CDF}
 \description{
 Calculate a CDF of quasi-extinction risk for the SEG model
 }
-
