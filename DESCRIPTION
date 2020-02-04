@@ -9,8 +9,6 @@ Description: Perform population viability analysis (PVA) in R without needing
     advanced coding techniques. The goal is for the tools to be accessible to any
     user who is comfortable with standard data analysis in R. A GUI based on shiny
     will be included for many standard analyses.
-Depends:
-    shiny
 Suggests:
     plyr,
     popbio,
