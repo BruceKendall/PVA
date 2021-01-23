@@ -4,8 +4,15 @@
 \alias{extRiskSEG}
 \title{Calculate a CDF of quasi-extinction risk for the SEG model}
 \usage{
-extRiskSEG(mu, sigma2, time_horizon, nsims = 1000, N0 = NULL, Nx = NULL,
-  d = log(N0/Nx))
+extRiskSEG(
+  mu,
+  sigma2,
+  time_horizon,
+  nsims = 1000,
+  N0 = NULL,
+  Nx = NULL,
+  d = log(N0/Nx)
+)
 }
 \arguments{
 \item{mu}{the mean log growth rate}

@@ -8,15 +8,13 @@
 Create a demographic matrix model object
 }
 
-\synopsis{
+\usage{
 dmm(x, fec=NULL, grow=NULL, p0=NULL, classes=NULL,
     type=c("age","stage","size","sfa"), census=c("pre","post"),
     terminal=FALSE, data.type=c("rates","aggregated","raw"), 
     fec.sampling=c("Poisson","binomial"), seedbank=FALSE,
     seed.germ=NULL, seed.surv=NULL, annual=F, years=NULL)
- }
- 
-\usage{
+
 dmm(x, classes=NULL, census=c("pre","post"), type="age", terminal=F, annual=F, years=NULL)
 
 dmm(x, grow, p0=NULL, classes, census=c("pre","post"), type, 

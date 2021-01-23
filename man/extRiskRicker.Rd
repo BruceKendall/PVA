@@ -4,8 +4,16 @@
 \alias{extRiskRicker}
 \title{Calculate a CDF of quasi-extinction risk for the Ricker model}
 \usage{
-extRiskRicker(r, K, sigma2, time_horizon, N0, nsims = 1000, Nx = NULL,
-  d = log(N0/Nx))
+extRiskRicker(
+  r,
+  K,
+  sigma2,
+  time_horizon,
+  N0,
+  nsims = 1000,
+  Nx = NULL,
+  d = log(N0/Nx)
+)
 }
 \arguments{
 \item{r}{the low-density growth rate}
